@@ -2,13 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Memory Game</title>
+    <title>Blackjack</title>
     <meta name="description" content="Memory Game">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
+    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
 </head>
 <body>
+    <div class="container">
+        <!------ Game header ------>
+        <header>
+            <h1>Blackjack</h1>
+        </header>
+
+        <div class="bet">
+            <p>Bet</p>
+        </div>
+
+        <div class="board">
+            <h4>Dealer's cards</h4>
+            <div class="board_dealer">
+                <div class="card"></div>
+                <div class="card"></div>
+            </div>
+
+            <h4>Your cards</h4>
+            <div class="board_player">
+                <div class="card"></div>
+                <div class="card"></div>
+            </div>
+        </div>
 
 
+    </div>
 </body>
 </html>
