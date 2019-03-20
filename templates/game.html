@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-    <script src="../static/js/game.js"></script>
+   <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
+
 </head>
 <body>
     <div class="container">
@@ -17,27 +18,30 @@
             <h1>Blackjack</h1>
         </header>
 
-        <div class="bet">
-            <p>Bet</p>
+        <!--
+        <div class="bet chipContainer" id="chipContainer">
+            <span>Bet: </span>
+            <button>Increase bet</button>
+            <button>Decrease bet</button>
         </div>
-        <button>Start</button>
-        <button onclick="startGame()">Test</button>
+        -->
 
         <div class="board">
             <h4>Dealer's cards</h4>
             <div class="board_dealer" id="dealer">
-                <div class="card" id="board1"></div>
-                <div class="card" id="board2"></div>
+
             </div>
 
             <h4>Your cards</h4>
             <div class="board_player" id="player">
-                <div class="card" id="p1"></div>
-                <div class="card" id="p2"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+
             </div>
+        </div>
+
+        <div class="footer">
+            <button class="start" id="start">Start</button>
+            <button class="hit" id="hit">Hit</button>
+            <button class="stand" id="stand">Stand</button>
         </div>
 
 
