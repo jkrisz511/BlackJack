@@ -52,6 +52,7 @@ function getPlayersCard() {
 function hitCard() {
     let hitButton = document.getElementById('hit');
     hitButton.addEventListener('click', getPlayersCard);
+    hitButton.addEventListener('click', playersValue);
 }
 
 function changeBet() {
