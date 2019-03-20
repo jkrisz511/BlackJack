@@ -38,15 +38,15 @@ function getDealersCard() {
     let card = random();
     dealer_values += getValues(card);
     let dealer = document.getElementById("dealer");
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png" height="135px" width="85px"></div>`);
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/green_back.png" height="135px" width="85px"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/green_back.png"></div>`);
 }
 
 function getPlayersCard() {
     let card = random();
     player_values += getValues(card);
     let player = document.getElementById("player");
-    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png" height="135px" width="85px"></div>`);
+    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
 }
 
 function hitCard() {
@@ -57,19 +57,29 @@ function hitCard() {
 
 function changeBet() {
     let amount = 50;
+    let balance = 500;
+
+    let balanceContainer = document.getElementById('balance');
     let amountContainer = document.getElementById('betAmount');
     let raiseButton = document.getElementById('up');
-    console.log(raiseButton)
     let decreaseButton = document.getElementById('down');
 
     raiseButton.addEventListener('click', function() {
-       amount += 10;
-       amountContainer.innerHTML = `Bet:<span>${amount} $</span>`;
+       if (balance > 0) {
+           amount += 10;
+           balance -= 10;
+           amountContainer.innerHTML = `Bet: <span>${amount} $</span>`;
+           balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
+       }
     })
 
     decreaseButton.addEventListener('click', function() {
-       amount -= 10;
-       amountContainer.innerHTML = `Bet:<span>${amount} $</span>`;
+       if (amount > 0) {
+           amount -= 10;
+           balance += 10;
+           amountContainer.innerHTML = `Bet:<span>${amount} $</span>`;
+           balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
+       }
     })
 }
 
