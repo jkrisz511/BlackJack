@@ -9,9 +9,13 @@ function main() {
 
 function startGame() {
     let startButton = document.getElementById('start');
+    let standButton = document.getElementById('stand');
     startButton.addEventListener('click', getStarterCards);
     startButton.addEventListener('click', playersValue);
     startButton.addEventListener('click', dealersValue);
+    startButton.addEventListener('click', showFakeCard);
+    standButton.addEventListener('click', dealerMoves);
+    standButton.addEventListener('click', dealersValue);
     hitCard()
 
 }
@@ -38,21 +42,26 @@ function getDealersCard() {
     let card = random();
     dealer_values += getValues(card);
     let dealer = document.getElementById("dealer");
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png" height="135px" width="85px"></div>`);
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/green_back.png" height="135px" width="85px"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+
 }
 
 function getPlayersCard() {
     let card = random();
     player_values += getValues(card);
     let player = document.getElementById("player");
-    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png" height="135px" width="85px"></div>`);
+    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+    if (player_values > 21){
+        console.log("You Lose")
+    }
 }
 
 function hitCard() {
     let hitButton = document.getElementById('hit');
     hitButton.addEventListener('click', getPlayersCard);
     hitButton.addEventListener('click', playersValue);
+
+
 }
 
 function changeBet() {
@@ -87,5 +96,36 @@ function playersValue() {
 function dealersValue() {
     document.getElementById("dealerValue").innerHTML = dealer_values;
 }
+
+function changeCard() {
+    let element = document.getElementById("back");
+    element.parentNode.removeChild(element);
+    let card = random();
+    dealer_values += getValues(card);
+    let dealer = document.getElementById("dealer");
+    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+}
+
+function dealerMoves() {
+    changeCard();
+    while (dealer_values <= 16) {
+        getDealersCard();
+    }
+    if (dealer_values === player_values){
+        console.log("Its a tie");
+    }
+    if (dealer_values <= 21 && dealer_values > player_values){
+        console.log("You lose");
+    }else if( player_values > dealer_values){
+        console.log("You won");
+    }
+
+}
+
+function showFakeCard() {
+    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
+    console.log(dealer)
+}
+
 
 main();
