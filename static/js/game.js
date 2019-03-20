@@ -1,3 +1,11 @@
+function main() {
+    let startButton = document.getElementById('start');
+    startButton.addEventListener('click', getDealersCard);
+    startButton.addEventListener('click', getPlayersCard);
+}
+
+
+
 function random() {
     let cards = ["2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S","5C","5D","5H","5S","6C","6D","6H","6S",
                 "7C","7D","7H","7S","8C","8D","8H","8S","9C","9D","9H","9S","10C","10D","10H","10S","AC","AD","AH","AS",
@@ -6,14 +14,17 @@ function random() {
 
 }
 
-function getCard() {
+function getDealersCard() {
     let card = random();
-    let card1 = document.getElementById("board1");
-    card1.insertAdjacentHTML("beforeend", `<img src="/static/img/`card`.png" height="135px" width="85px">`);
+    let dealer = document.getElementById("dealer");
+    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png" height="135px" width="85px"></div>`);
 }
 
-function img_create(src) {
-   (new Image()).src ="static/img/"+src+".png";
-
+function getPlayersCard() {
+    let card = random();
+    let player = document.getElementById("player");
+    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png" height="135px" width="85px"></div>`);
 }
 
+
+main();
