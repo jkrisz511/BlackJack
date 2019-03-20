@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+    <script src="../static/js/game.js"></script>
 </head>
 <body>
     <div class="container">
@@ -19,7 +20,6 @@
         <div class="bet">
             <p>Bet</p>
         </div>
-
         <div class="board">
             <h4>Dealer's cards</h4>
             <div class="board_dealer">
@@ -29,6 +29,9 @@
 
             <h4>Your cards</h4>
             <div class="board_player">
+                <div class="card"></div>
+                <div class="card"></div>
+                <div class="card"></div>
                 <div class="card"></div>
                 <div class="card"></div>
             </div>
