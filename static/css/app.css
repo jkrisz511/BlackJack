@@ -17,7 +17,7 @@ body {
 }
 
 body {
-    background: #ffffff url('/static/img/asanoha-400px.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('/static/img/bg.png');
     font-family: 'Coda', cursive;
 }
 
@@ -33,7 +33,7 @@ h1 {
     font-family: Monoton, Tahoma, sans-serif;
     font-weight: 500;
     font-size: 28px;
-    color: #001827;
+    color: #fff;
 }
 
 /*
