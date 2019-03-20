@@ -12,7 +12,7 @@
     <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 
 </head>
-<body>
+<body onload="playersValue();dealersValue()">
     <div class="container">
         <!------ Game header ------>
         <header>
@@ -29,12 +29,12 @@
                 <button id="down"><i class="fas fa-arrow-down"></i></button>
             </div>
 
-            <h4>Dealer's cards</h4>
+            <h4>Dealer's cards : <span id="dealerValue"></span> </h4>
             <div class="board_dealer" id="dealer">
 
             </div>
 
-            <h4>Your cards</h4>
+            <h4>Your cards : <span id="playerValue"></span></h4>
             <div class="board_player" id="player">
 
             </div>
