@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-   <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
 
 </head>
 <body>
@@ -18,15 +19,16 @@
             <h1>Blackjack</h1>
         </header>
 
-        <!--
-        <div class="bet chipContainer" id="chipContainer">
-            <span>Bet: </span>
-            <button>Increase bet</button>
-            <button>Decrease bet</button>
-        </div>
-        -->
 
         <div class="board">
+            <div class="bet chipContainer" id="chipContainer">
+                <div id="betAmount">
+                    Bet:<span>50$</span>
+                </div>
+                <button id="up"><i class="fas fa-arrow-up"></i></button>
+                <button id="down"><i class="fas fa-arrow-down"></i></button>
+            </div>
+
             <h4>Dealer's cards</h4>
             <div class="board_dealer" id="dealer">
 
