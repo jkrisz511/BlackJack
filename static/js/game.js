@@ -3,6 +3,8 @@ let player_values =0;
 let dealer_values =0;
 let ace1 = false;
 let ace2 = false;
+let amount = 0;
+let balance = 500;
 
 function main() {
     startGame();
@@ -10,6 +12,8 @@ function main() {
 }
 
 function startGame() {
+    resetGame();
+
     let startButton = document.getElementById('start');
     let standButton = document.getElementById('stand');
     startButton.addEventListener('click', getStarterCards);
@@ -88,9 +92,11 @@ function getPlayersCard() {
     player.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
     if (player_values === 21){
         winPopup();
+        closePopup();
     }
     if (player_values > 21){
         losePopup();
+        closePopup();
     }
 }
 
@@ -102,9 +108,6 @@ function hitCard() {
 }
 
 function changeBet() {
-    let amount = 0;
-    let balance = 500;
-
     let balanceContainer = document.getElementById('balance');
     let amountContainer = document.getElementById('betAmount');
     let raiseButton = document.getElementById('up');
@@ -189,18 +192,58 @@ function dealerMoves() {
 
     if (dealer_values === player_values) {
         tiePopup();
+        closePopup();
     }
     if (dealer_values <= 21 && dealer_values > player_values) {
         losePopup();
+        closePopup();
     }
     if ((player_values > dealer_values && player_values <= 21) || dealer_values > 21) {
         winPopup();
+        closePopup();
     }
 }
 
 function showFakeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
 }
+
+function setupNextRound() {
+    player_values =0;
+    dealer_values =0;
+    document.getElementById("playerValue").innerHTML = player_values;
+    document.getElementById("dealerValue").innerHTML = dealer_values;
+
+    let dealer = document.getElementById("dealer");
+    dealer.innerHTML = '';
+    let player = document.getElementById("player");
+    player.innerHTML = '';
+
+    let closeIcon = document.getElementById("second-close-icon");
+    let popup = document.querySelector('.popup-container');
+    let loseMessage = document.querySelector('.lose');
+    let winMessage = document.querySelector('.win');
+    let tieMessage = document.querySelector('.tie');
+
+    popup.classList.add('hidden');
+    loseMessage.classList.add('hidden');
+    winMessage.classList.add('hidden');
+    tieMessage.classList.add('hidden');
+    closeIcon.classList.add('hidden');
+
+}
+
+function resetGame() {
+    amount = 0;
+    balance = 500;
+    setupNextRound();
+}
+
+function closePopup() {
+    let closeIcon = document.getElementById("second-close-icon");
+    closeIcon.addEventListener("click", setupNextRound);
+}
+
 
 
 main();
