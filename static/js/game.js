@@ -274,10 +274,15 @@ function bet() {
     let betButton = document.getElementById("ok");
     let upButton = document.getElementById("up");
     let downButton = document.getElementById("down");
+    let hitButton = document.querySelector(".hit");
+    let standButton = document.querySelector(".stand");
 
     betButton.classList.add("hidden");
     upButton.classList.add("hidden");
     downButton.classList.add("hidden");
+
+    hitButton.classList.remove("hidden");
+    standButton.classList.remove("hidden");
 
 }
 
