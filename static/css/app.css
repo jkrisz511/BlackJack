@@ -132,3 +132,67 @@ h1 {
     cursor: pointer;
 }
 
+
+/*
+ * Styles for congratulation popup
+ */
+
+.popup-container {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+
+.hidden {
+	display: none;
+}
+
+.popup {
+	margin: 20px auto;
+	padding: 30px;
+	background: linear-gradient(180deg, #A1C7CC 0%, #aa7ecd 100%);
+	border-radius: 10px;
+	font-family: Shojumaru, Tahoma, sans-serif;
+	position: relative;
+	color: #242c43;
+}
+.message {
+    margin: 18px 0;
+}
+
+.popup .close-icon {
+	position: absolute;
+	top: 15px;
+	right: 25px;
+	text-decoration: none;
+	padding: 4px 8px;
+	border-radius: 2px;
+}
+
+.popup .close-icon:hover {
+	background: #cacbbd;
+}
+
+
+#replay-button {
+	background-color: #28314b;
+	color: #fff;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	font-size: 18px;
+}
+
+#replay-button:hover {
+	cursor: pointer;
+	opacity: 0.8;
+}

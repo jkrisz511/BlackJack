@@ -23,6 +23,7 @@ function startGame() {
 
 }
 
+
 function random() {
     let cards = ["2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S","5C","5D","5H","5S","6C","6D","6H","6S",
                 "7C","7D","7H","7S","8C","8D","8H","8S","9C","9D","9H","9S","10C","10D","10H","10S","AC","AD","AH","AS",
@@ -53,16 +54,49 @@ function getDealersCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
+function checkAcesForPlayer(card) {
+    let future_value =player_values + getValues(card);
+    let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
+    if (ace1 ===false && !aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === false && aceCard && player_values <= 10){
+        player_values += getValues(card);
+        ace1 = true;
+    }else if (ace1 === false && aceCard && future_value > 21){
+        player_values += 1;
+        ace1 =true;
+        ace2 = true;
+    }else if (ace1 === true && aceCard && player_values > 21){
+        player_values += 1;
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
+        player_values -= 10;
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
+        player_values += 1;
+        ace2 = true;
+    }
+}
+
+
 function getPlayersCard() {
     let card = random();
     checkAcesForPlayer(card);
     let player = document.getElementById("player");
     player.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
     if (player_values === 21){
-        setTimeout(popUpWin,100)
+        winPopup();
     }
     if (player_values > 21){
-        setTimeout(popUpLose,100)
+        losePopup();
     }
 }
 
@@ -71,11 +105,10 @@ function hitCard() {
     hitButton.addEventListener('click', getPlayersCard);
     hitButton.addEventListener('click', playersValue);
 
-
 }
 
 function changeBet() {
-    let amount = 50;
+    let amount = 0;
     let balance = 500;
 
     let balanceContainer = document.getElementById('balance');
@@ -126,6 +159,34 @@ function changeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
+function tiePopup() {
+    let popup = document.querySelector('.popup-container');
+    let tieMessage = document.querySelector('.tie');
+    let closeIcon = document.getElementById('second-close-icon');
+    popup.classList.remove('hidden');
+    tieMessage.classList.remove('hidden');
+    closeIcon.classList.remove('hidden');
+}
+
+function winPopup() {
+    let popup = document.querySelector('.popup-container');
+    let winMessage = document.querySelector('.win');
+    let closeIcon = document.getElementById('second-close-icon');
+    popup.classList.remove('hidden');
+    winMessage.classList.remove('hidden');
+    closeIcon.classList.remove('hidden');
+}
+
+
+function losePopup() {
+    let popup = document.querySelector('.popup-container');
+    let loseMessage = document.querySelector('.lose');
+    let closeIcon = document.getElementById('second-close-icon');
+    popup.classList.remove('hidden');
+    loseMessage.classList.remove('hidden');
+    closeIcon.classList.remove('hidden');
+}
+
 function dealerMoves() {
     changeCard();
     while (dealer_values <= 16) {
@@ -133,64 +194,20 @@ function dealerMoves() {
     }
 
     if (dealer_values === player_values) {
-        setTimeout(popUpWin,100)
-    }
-    if (dealer_values > 21) {
-        setTimeout(popUpWin,100)
-    }
-    if (dealer_values < 21 && dealer_values < player_values) {
-        setTimeout(popUpWin,100)
+        tiePopup();
     }
     if (dealer_values <= 21 && dealer_values > player_values) {
-        setTimeout(popUpLose,100)
+        losePopup();
     }
-
+    if ((player_values > dealer_values && player_values <= 21) || dealer_values > 21) {
+        winPopup();
+    }
 }
 
 function showFakeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
 }
 
-function popUpWin() {
-    alert("You won")
-
-}
-
-function popUpLose() {
-    alert("You lose")
-}
-
-function checkAcesForPlayer(card){
-    let future_value =player_values + getValues(card);
-    let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
-    if (ace1 ===false && !aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === false && aceCard && player_values <= 10){
-        player_values += getValues(card);
-        ace1 = true;
-    }else if (ace1 === false && aceCard && future_value > 21){
-        player_values += 1;
-        ace1 =true;
-        ace2 = true;
-    }else if (ace1 === true && aceCard && player_values > 21){
-        player_values += 1;
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
-        player_values -= 10;
-        player_values += getValues(card);
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false &&!aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
-        player_values += getValues(card);
-        ace2 = true;
-    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
-        player_values += 1;
-        ace2 = true;
-    }
-}
 
 main();
 
