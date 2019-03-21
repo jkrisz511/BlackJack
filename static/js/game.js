@@ -12,14 +12,15 @@ function main() {
 }
 
 function startGame() {
-    resetGame();
 
-    let startButton = document.getElementById('start');
     let standButton = document.getElementById('stand');
-    startButton.addEventListener('click', getStarterCards);
-    startButton.addEventListener('click', playersValue);
-    startButton.addEventListener('click', dealersValue);
-    startButton.addEventListener('click', showFakeCard);
+    let betButton = document.getElementById("ok");
+
+    betButton.addEventListener("click", bet);
+    betButton.addEventListener('click', getStarterCards);
+    betButton.addEventListener('click', playersValue);
+    betButton.addEventListener('click', dealersValue);
+    betButton.addEventListener('click', showFakeCard);
     standButton.addEventListener('click', dealerMoves);
     standButton.addEventListener('click', dealersValue);
     hitCard()
@@ -160,18 +161,25 @@ function tiePopup() {
     let popup = document.querySelector('.popup-container');
     let tieMessage = document.querySelector('.tie');
     let closeIcon = document.getElementById('second-close-icon');
+    let balanceContainer = document.getElementById('balance');
     popup.classList.remove('hidden');
     tieMessage.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
+    balanceContainer.innerHTML = `Balance: <span>${balance + amount} $</span>`;
 }
 
 function winPopup() {
     let popup = document.querySelector('.popup-container');
     let winMessage = document.querySelector('.win');
     let closeIcon = document.getElementById('second-close-icon');
+    let balanceContainer = document.getElementById('balance');
+
     popup.classList.remove('hidden');
     winMessage.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
+    amount *= 2;
+    console.log(amount);
+    balanceContainer.innerHTML = `Balance: <span>${balance + amount} $</span>`;
 }
 
 
@@ -182,6 +190,8 @@ function losePopup() {
     popup.classList.remove('hidden');
     loseMessage.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
+
+
 }
 
 function dealerMoves() {
@@ -209,6 +219,7 @@ function showFakeCard() {
 }
 
 function setupNextRound() {
+    amount = 0;
     player_values =0;
     dealer_values =0;
     document.getElementById("playerValue").innerHTML = player_values;
@@ -224,6 +235,12 @@ function setupNextRound() {
     let loseMessage = document.querySelector('.lose');
     let winMessage = document.querySelector('.win');
     let tieMessage = document.querySelector('.tie');
+    let betButton = document.getElementById("ok");
+    let upButton = document.getElementById("up");
+    let downButton = document.getElementById("down");
+    let amountContainer = document.getElementById('betAmount');
+
+    amountContainer.innerHTML = `Bet: <span>${amount} $</span>`;
 
     popup.classList.add('hidden');
     loseMessage.classList.add('hidden');
@@ -231,10 +248,13 @@ function setupNextRound() {
     tieMessage.classList.add('hidden');
     closeIcon.classList.add('hidden');
 
+    betButton.classList.remove("hidden");
+    upButton.classList.remove("hidden");
+    downButton.classList.remove("hidden");
+
 }
 
 function resetGame() {
-    amount = 0;
     balance = 500;
     setupNextRound();
 }
@@ -242,6 +262,17 @@ function resetGame() {
 function closePopup() {
     let closeIcon = document.getElementById("second-close-icon");
     closeIcon.addEventListener("click", setupNextRound);
+}
+
+function bet() {
+    let betButton = document.getElementById("ok");
+    let upButton = document.getElementById("up");
+    let downButton = document.getElementById("down");
+
+    betButton.classList.add("hidden");
+    upButton.classList.add("hidden");
+    downButton.classList.add("hidden");
+
 }
 
 
