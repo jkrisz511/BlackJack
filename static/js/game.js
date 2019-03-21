@@ -1,24 +1,9 @@
 
 let player_values =0;
 let dealer_values =0;
+let ace1 = false;
+let ace2 = false;
 
-function main() {
-    startGame();
-    changeBet();
-}
-
-function startGame() {
-    let startButton = document.getElementById('start');
-    let standButton = document.getElementById('stand');
-    startButton.addEventListener('click', getStarterCards);
-    startButton.addEventListener('click', playersValue);
-    startButton.addEventListener('click', dealersValue);
-    startButton.addEventListener('click', showFakeCard);
-    standButton.addEventListener('click', dealerMoves);
-    standButton.addEventListener('click', dealersValue);
-    hitCard()
-
-}
 
 function random() {
     let cards = ["2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S","5C","5D","5H","5S","6C","6D","6H","6S",
@@ -42,17 +27,52 @@ function getDealersCard() {
     let card = random();
     dealer_values += getValues(card);
     let dealer = document.getElementById("dealer");
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
+
+function checkAcesForPlayer(card) {
+    let future_value =player_values + getValues(card);
+    let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
+    if (ace1 ===false && !aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === false && aceCard && player_values <= 10){
+        player_values += getValues(card);
+        ace1 = true;
+    }else if (ace1 === false && aceCard && future_value > 21){
+        player_values += 1;
+        ace1 =true;
+        ace2 = true;
+    }else if (ace1 === true && aceCard && player_values > 21){
+        player_values += 1;
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
+        player_values -= 10;
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
+        player_values += 1;
+        ace2 = true;
+    }
+}
+
 
 function getPlayersCard() {
     let card = random();
-    player_values += getValues(card);
+    checkAcesForPlayer(card);
     let player = document.getElementById("player");
-    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
-
+    player.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
+    if (player_values === 21){
+        winPopup();
+    }
     if (player_values > 21){
-        console.log("You Lose");
+        losePopup();
     }
 }
 
@@ -60,7 +80,6 @@ function hitCard() {
     let hitButton = document.getElementById('hit');
     hitButton.addEventListener('click', getPlayersCard);
     hitButton.addEventListener('click', playersValue);
-
 
 }
 
@@ -113,28 +132,7 @@ function changeCard() {
     let card = random();
     dealer_values += getValues(card);
     let dealer = document.getElementById("dealer");
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
-}
-
-function dealerMoves() {
-    changeCard();
-    while (dealer_values <= 16) {
-        getDealersCard();
-    }
-    if (dealer_values === player_values) {
-        tiePopup();
-    }
-    if (dealer_values <= 21 && dealer_values > player_values) {
-        losePopup();
-    }
-    if ((player_values > dealer_values && player_values <= 21) || dealer_values > 21) {
-        winPopup();
-    }
-
-}
-
-function showFakeCard() {
-    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
 function tiePopup() {
@@ -163,6 +161,45 @@ function losePopup() {
     popup.classList.remove('hidden');
     loseMessage.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
+
+function dealerMoves() {
+    changeCard();
+    while (dealer_values <= 16) {
+        getDealersCard();
+    }
+
+    if (dealer_values === player_values) {
+        tiePopup();
+    }
+    if (dealer_values <= 21 && dealer_values > player_values) {
+        losePopup();
+    }
+    if ((player_values > dealer_values && player_values <= 21) || dealer_values > 21) {
+        winPopup();
+    }
+}
+
+function showFakeCard() {
+    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
+}
+
+function main() {
+    startGame();
+    changeBet();
+}
+
+function startGame() {
+    let startButton = document.getElementById('start');
+    let standButton = document.getElementById('stand');
+    startButton.addEventListener('click', getStarterCards);
+    startButton.addEventListener('click', playersValue);
+    startButton.addEventListener('click', dealersValue);
+    startButton.addEventListener('click', showFakeCard);
+    standButton.addEventListener('click', dealerMoves);
+    standButton.addEventListener('click', dealersValue);
+    hitCard()
+
 }
 
 main();
+
