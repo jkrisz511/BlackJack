@@ -17,6 +17,7 @@
 </head>
 <body>
     <div class="container">
+
         <!------ Game header ------>
         <header>
             <h1>Blackjack</h1>
@@ -26,6 +27,7 @@
             Balance: <span>500$</span>
         </div>
 
+        <!------ Board ------>
         <div class="board">
             <div class="bet chipContainer" id="chipContainer">
                 <div id="betAmount">
@@ -53,6 +55,28 @@
             <button class="stand" id="stand">Stand</button>
         </div>
 
+        <!------ Modal  ------>
+        <div class="popup-container hidden">
+            <div class="popup">
+				<a class="close-icon hidden" id="first-close-icon" href=# >&#10006;</a>
+                <a class="close-icon hidden" id="second-close-icon" href=# >&#10006;</a>
+				<h2 class="congrat hidden">Congratulations !!!</h2>
+                <h2 class="congrat hidden">GAME OVER !!!</h2>
+				 <div class="win message hidden">
+					AWESOME! YOU WIN!
+				</div>
+                <div class="tie hidden message">
+                    IT'S A TIE!
+                </div>
+                <div class="lose message hidden">
+                    BAD LUCK! YOU LOSE!
+                </div>
+				<button id="replay-button" class="hidden">
+					Play again
+				</button>
+
+			</div>
+        </div>
 
     </div>
 </body>

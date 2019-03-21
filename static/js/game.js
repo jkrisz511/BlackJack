@@ -52,7 +52,7 @@ function getPlayersCard() {
     player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
 
     if (player_values > 21){
-        console.log("You Lose")
+        console.log("You Lose");
     }
 }
 
@@ -122,20 +122,47 @@ function dealerMoves() {
         getDealersCard();
     }
     if (dealer_values === player_values) {
-        console.log("Its a tie");
+        tiePopup();
     }
     if (dealer_values <= 21 && dealer_values > player_values) {
-        console.log("You lose");
-    }else {
-        console.log("You won");
+        losePopup();
+    }
+    if ((player_values > dealer_values && player_values <= 21) || dealer_values > 21) {
+        winPopup();
     }
 
 }
 
 function showFakeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
-    console.log(dealer)
 }
 
+function tiePopup() {
+    let popup = document.querySelector('.popup-container');
+    let tieMessage = document.querySelector('.tie');
+    let closeIcon = document.getElementById('second-close-icon');
+    popup.classList.remove('hidden');
+    tieMessage.classList.remove('hidden');
+    closeIcon.classList.remove('hidden');
+}
+
+function winPopup() {
+    let popup = document.querySelector('.popup-container');
+    let winMessage = document.querySelector('.win');
+    let closeIcon = document.getElementById('second-close-icon');
+    popup.classList.remove('hidden');
+    winMessage.classList.remove('hidden');
+    closeIcon.classList.remove('hidden');
+}
+
+
+function losePopup() {
+    let popup = document.querySelector('.popup-container');
+    let loseMessage = document.querySelector('.lose');
+    let closeIcon = document.getElementById('second-close-icon');
+    popup.classList.remove('hidden');
+    loseMessage.classList.remove('hidden');
+    closeIcon.classList.remove('hidden');
+}
 
 main();
