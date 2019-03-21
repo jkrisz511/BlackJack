@@ -4,6 +4,24 @@ let dealer_values =0;
 let ace1 = false;
 let ace2 = false;
 
+function main() {
+    startGame();
+    changeBet();
+}
+
+function startGame() {
+    let startButton = document.getElementById('start');
+    let standButton = document.getElementById('stand');
+    startButton.addEventListener('click', getStarterCards);
+    startButton.addEventListener('click', playersValue);
+    startButton.addEventListener('click', dealersValue);
+    startButton.addEventListener('click', showFakeCard);
+    standButton.addEventListener('click', dealerMoves);
+    standButton.addEventListener('click', dealersValue);
+    hitCard()
+
+}
+
 
 function random() {
     let cards = ["2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S","5C","5D","5H","5S","6C","6D","6H","6S",
@@ -161,6 +179,7 @@ function losePopup() {
     popup.classList.remove('hidden');
     loseMessage.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
+}
 
 function dealerMoves() {
     changeCard();
@@ -183,55 +202,6 @@ function showFakeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
 }
 
-function main() {
-    startGame();
-    changeBet();
-}
-
-function startGame() {
-    let startButton = document.getElementById('start');
-    let standButton = document.getElementById('stand');
-    startButton.addEventListener('click', getStarterCards);
-    startButton.addEventListener('click', playersValue);
-    startButton.addEventListener('click', dealersValue);
-    startButton.addEventListener('click', showFakeCard);
-    standButton.addEventListener('click', dealerMoves);
-    standButton.addEventListener('click', dealersValue);
-    hitCard()
-
-}
-
-function checkAcesForPlayer(card) {
-    let future_value =player_values + getValues(card);
-    let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
-    if (ace1 ===false && !aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === false && aceCard && player_values <= 10){
-        player_values += getValues(card);
-        ace1 = true;
-    }else if (ace1 === false && aceCard && future_value > 21){
-        player_values += 1;
-        ace1 =true;
-        ace2 = true;
-    }else if (ace1 === true && aceCard && player_values > 21){
-        player_values += 1;
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
-        player_values -= 10;
-        player_values += getValues(card);
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false &&!aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
-        player_values += getValues(card);
-        ace2 = true;
-    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
-        player_values += 1;
-        ace2 = true;
-    }
-}
 
 main();
 
