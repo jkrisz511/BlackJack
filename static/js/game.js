@@ -1,6 +1,8 @@
 
 let player_values =0;
 let dealer_values =0;
+let ace1 = false;
+let ace2 = false;
 
 function main() {
     startGame();
@@ -42,17 +44,19 @@ function getDealersCard() {
     let card = random();
     dealer_values += getValues(card);
     let dealer = document.getElementById("dealer");
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
 function getPlayersCard() {
     let card = random();
-    player_values += getValues(card);
+    checkAcesForPlayer(card)
     let player = document.getElementById("player");
-    player.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
-
+    player.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
+    if (player_values === 21){
+        setTimeout(popUpWin,100)
+    }
     if (player_values > 21){
-        console.log("You Lose")
+        setTimeout(popUpLose,100)
     }
 }
 
@@ -113,7 +117,7 @@ function changeCard() {
     let card = random();
     dealer_values += getValues(card);
     let dealer = document.getElementById("dealer");
-    dealer.insertAdjacentHTML("beforeend", `<div class="card"><img src="/static/img/${card}.png"></div>`);
+    dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
 function dealerMoves() {
@@ -121,21 +125,66 @@ function dealerMoves() {
     while (dealer_values <= 16) {
         getDealersCard();
     }
+
     if (dealer_values === player_values) {
-        console.log("Its a tie");
+        setTimeout(popUpWin,100)
+    }
+    if (dealer_values > 21) {
+        setTimeout(popUpWin,100)
+    }
+    if (dealer_values < 21 && dealer_values < player_values) {
+        setTimeout(popUpWin,100)
     }
     if (dealer_values <= 21 && dealer_values > player_values) {
-        console.log("You lose");
-    }else {
-        console.log("You won");
+        setTimeout(popUpLose,100)
     }
 
 }
 
 function showFakeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="back"><img src="/static/img/green_back.png"></div>`);
-    console.log(dealer)
 }
 
+function popUpWin() {
+    alert("You won")
+
+}
+
+function popUpLose() {
+    alert("You lose")
+}
+
+function checkAcesForPlayer(card){
+    let future_value =player_values + getValues(card);
+    let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
+    if (ace1 ===false && !aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === false && aceCard && player_values <= 10){
+        player_values += getValues(card);
+        ace1 = true;
+    }else if (ace1 === false && aceCard && future_value > 21){
+        player_values += 1;
+        ace1 =true;
+        ace2 = true;
+    }else if (ace1 === true && aceCard && player_values > 21){
+        player_values += 1;
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
+        player_values -= 10;
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
+        player_values += 1;
+        ace2 = true;
+    }
+}
 
 main();
+
