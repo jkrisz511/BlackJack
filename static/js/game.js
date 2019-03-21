@@ -1,6 +1,7 @@
 
 let player_values =0;
 let dealer_values =0;
+let dace1 = false;
 let ace1 = false;
 let ace2 = false;
 
@@ -42,14 +43,19 @@ function getValues(card) {
 
 function getDealersCard() {
     let card = random();
-    dealer_values += getValues(card);
+    let future_value =dealer_values + getValues(card);
+    if ((card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
+        dealer_values += 1;
+    } else {
+        dealer_values += getValues(card);
+    }
     let dealer = document.getElementById("dealer");
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
 function getPlayersCard() {
     let card = random();
-    checkAcesForPlayer(card)
+    checkAcesForPlayer(card);
     let player = document.getElementById("player");
     player.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
     if (player_values === 21){
