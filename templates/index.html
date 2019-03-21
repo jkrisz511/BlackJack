@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BlackJack</title>
+
+    <!------ Google fonts ------->
+
+    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/clock.js') }}" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="heading">
+            <a class="link" href="{{ url_for('route_game') }}">
+                <h1>It's Time To Play Blackjack !</h1>
+            </a>
+        </div>
+
+        <div class="clock">
+            <div class="clock-face">
+                <div class="hand hour-hand"></div>
+                <div class="hand min-hand"></div>
+                <div class="hand second-hand"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

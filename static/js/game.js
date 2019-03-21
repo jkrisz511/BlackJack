@@ -102,7 +102,7 @@ function hitCard() {
 }
 
 function changeBet() {
-    let amount = 50;
+    let amount = 0;
     let balance = 500;
 
     let balanceContainer = document.getElementById('balance');

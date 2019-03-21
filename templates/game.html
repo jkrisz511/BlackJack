@@ -1,59 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Blackjack</title>
-    <meta name="description" content="Memory Game">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
 
-    <link href="https://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Monoton">
-    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <script src="{{ url_for('static', filename='js/game.js') }}" defer></script>
+{% extends 'layout.html' %}
 
-</head>
-<body>
-    <div class="container">
+    {% block content %}
+        <div class="container">
+            <!------ Game header ------>
+            <header>
+                <h1>Blackjack</h1>
+            </header>
 
-        <!------ Game header ------>
-        <header>
-            <h1>Blackjack</h1>
-        </header>
+            <div id="balance">
+                Balance: <span>500$</span>
+            </div>
 
-        <div id="balance">
-            Balance: <span>500$</span>
-        </div>
-
-        <!------ Board ------>
-        <div class="board">
-            <div class="bet chipContainer" id="chipContainer">
-                <div id="betAmount">
-                    Bet:<span>0$</span>
+            <div class="board">
+                <div class="bet chipContainer" id="chipContainer">
+                    <div id="betAmount">
+                        Bet:<span>0$</span>
+                    </div>
+                    <button id="up"><i class="fas fa-arrow-up"></i></button>
+                    <button id="down"><i class="fas fa-arrow-down"></i></button>
+                    <button id="down"><i class="fas fa-dollar-sign"></i></button>
                 </div>
-                <button id="up"><i class="fas fa-arrow-up"></i></button>
-                <button id="down"><i class="fas fa-arrow-down"></i></button>
-                <button id="down"><i class="fas fa-dollar-sign"></i></button>
+
+                <h4>Dealer's cards : <span id="dealerValue"></span> </h4>
+                <div class="board_dealer" id="dealer">
+
+                </div>
+
+                <h4>Your cards : <span id="playerValue"></span></h4>
+                <div class="board_player" id="player">
+
+                </div>
             </div>
 
-            <h4>Dealer's cards : <span id="dealerValue"></span> </h4>
-            <div class="board_dealer" id="dealer">
-
+            <div class="footer">
+                <button class="start" id="start">Start</button>
+                <button class="hit" id="hit">Hit</button>
+                <button class="stand" id="stand">Stand</button>
             </div>
-
-            <h4>Your cards : <span id="playerValue"></span></h4>
-            <div class="board_player" id="player">
-
-            </div>
-        </div>
-
-        <div class="footer">
-            <button class="start" id="start">Start</button>
-            <button class="hit" id="hit">Hit</button>
-            <button class="stand" id="stand">Stand</button>
-        </div>
 
         <!------ Modal  ------>
         <div class="popup-container hidden">
@@ -78,6 +62,5 @@
 			</div>
         </div>
 
-    </div>
-</body>
-</html>
+        </div>
+    {% endblock %}
