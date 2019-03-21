@@ -201,5 +201,37 @@ function startGame() {
 
 }
 
+function checkAcesForPlayer(card) {
+    let future_value =player_values + getValues(card);
+    let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
+    if (ace1 ===false && !aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === false && aceCard && player_values <= 10){
+        player_values += getValues(card);
+        ace1 = true;
+    }else if (ace1 === false && aceCard && future_value > 21){
+        player_values += 1;
+        ace1 =true;
+        ace2 = true;
+    }else if (ace1 === true && aceCard && player_values > 21){
+        player_values += 1;
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
+        player_values -= 10;
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard){
+        player_values += getValues(card);
+    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
+        player_values += getValues(card);
+        ace2 = true;
+    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
+        player_values += 1;
+        ace2 = true;
+    }
+}
+
 main();
 
