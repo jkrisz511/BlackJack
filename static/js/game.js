@@ -195,9 +195,14 @@ function showPopup(messageSelector) {
     let popup = document.querySelector('.popup-container');
     let message = document.querySelector(messageSelector);
     let closeIcon = document.getElementById('second-close-icon');
+    let hitButton = document.querySelector(".hit");
+    let standButton = document.querySelector(".stand");
     popup.classList.remove('hidden');
     message.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
+    hitButton.classList.add("hidden");
+    standButton.classList.add("hidden");
+
 }
 
 function tiePopup() {
