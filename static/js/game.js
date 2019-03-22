@@ -150,6 +150,7 @@ function changeBet() {
        if (balance > 0) {
            amount += 10;
            balance -= 10;
+           console.log(balance);
            amountContainer.innerHTML = `Bet: <span>${amount} $</span>`;
            balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
        }
@@ -159,6 +160,7 @@ function changeBet() {
        if (amount > 0) {
            amount -= 10;
            balance += 10;
+           console.log(balance);
            amountContainer.innerHTML = `Bet:<span>${amount} $</span>`;
            balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
        }
@@ -189,41 +191,34 @@ function changeCard() {
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
-function tiePopup() {
+function showPopup(messageSelector) {
     let popup = document.querySelector('.popup-container');
-    let tieMessage = document.querySelector('.tie');
+    let message = document.querySelector(messageSelector);
     let closeIcon = document.getElementById('second-close-icon');
-    let balanceContainer = document.getElementById('balance');
     popup.classList.remove('hidden');
-    tieMessage.classList.remove('hidden');
+    message.classList.remove('hidden');
     closeIcon.classList.remove('hidden');
-    balanceContainer.innerHTML = `Balance: <span>${balance + amount} $</span>`;
+}
+
+function tiePopup() {
+    let balanceContainer = document.getElementById('balance');
+    showPopup('.tie');
+    balance += amount;
+    balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
 }
 
 function winPopup() {
-    let popup = document.querySelector('.popup-container');
-    let winMessage = document.querySelector('.win');
-    let closeIcon = document.getElementById('second-close-icon');
+    showPopup('.win');
     let balanceContainer = document.getElementById('balance');
-
-    popup.classList.remove('hidden');
-    winMessage.classList.remove('hidden');
-    closeIcon.classList.remove('hidden');
     amount *= 2;
+    balance += amount;
     console.log(amount);
-    balanceContainer.innerHTML = `Balance: <span>${balance + amount} $</span>`;
+    balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
 }
 
 
 function losePopup() {
-    let popup = document.querySelector('.popup-container');
-    let loseMessage = document.querySelector('.lose');
-    let closeIcon = document.getElementById('second-close-icon');
-    popup.classList.remove('hidden');
-    loseMessage.classList.remove('hidden');
-    closeIcon.classList.remove('hidden');
-
-
+    showPopup('.lose');
 }
 
 function dealerMoves() {
