@@ -2,6 +2,8 @@
 let player_values =0;
 let dealer_values =0;
 let dace1 = false;
+let dace2 = false;
+let dace3 = false;
 let ace1 = false;
 let ace2 = false;
 let amount = 0;
@@ -50,9 +52,31 @@ function getValues(card) {
 function getDealersCard() {
     let card = random();
     let future_value =dealer_values + getValues(card);
-    if ((card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
+    if (dace1===false && (card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
+        console.log("if")
         dealer_values += 1;
+        dace1 = true
+        dace2 = true
+    }else if (dace1===false && (card === "AC" || card === "AD" || card === "AH" || card === "AS")){
+        console.log("if2")
+        dealer_values += getValues(card);
+        dace1 = true
+    }
+    else if ( dace1===true && dace2 === true && (card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
+        dealer_values += 1;
+        console.log("if3")
+        dace3 = true;
+    }else if ( dace1===true && dace2 === false && !(card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
+        dealer_values += -10;
+        dealer_values += getValues(card);
+        dace2 = true;
+         console.log("if4")
+    }else if ( dace1===true && dace2 === true && dace3===true && !(card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
+        dealer_values += -10;
+        dealer_values += getValues(card);
+         console.log("if5")
     } else {
+        console.log("else")
         dealer_values += getValues(card);
     }
     let dealer = document.getElementById("dealer");
@@ -80,12 +104,14 @@ function checkAcesForPlayer(card) {
         ace2 = true;
     }else if (ace1 === true && ace2 === false &&!aceCard){
         player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard){
+    }else if (ace1 === true && ace2 === true &&!aceCard && future_value < 21){
         player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard && future_value > 21) {
+    }else if (ace1 === true && ace2 === true &&!aceCard && future_value >= 21) {
         player_values += getValues(card);
-        ace2 = true;
     }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
+        player_values += 1;
+        ace2 = true;
+    }else if (ace1 === true && ace2 === false && aceCard && future_value > 21) {
         player_values += 1;
         ace2 = true;
     }
