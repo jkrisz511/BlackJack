@@ -1,11 +1,7 @@
-
-let player_values =0;
-let dealer_values =0;
-let dace1 = false;
-let dace2 = false;
-let dace3 = false;
-let ace1 = false;
-let ace2 = false;
+let player_values = 0;
+let dealer_values = 0;
+let dace = false;
+let ace = false;
 let amount = 0;
 let balance = 500;
 
@@ -32,88 +28,107 @@ function startGame() {
 
 
 function random() {
-    let cards = ["2C","2D","2H","2S","3C","3D","3H","3S","4C","4D","4H","4S","5C","5D","5H","5S","6C","6D","6H","6S",
-                "7C","7D","7H","7S","8C","8D","8H","8S","9C","9D","9H","9S","10C","10D","10H","10S","AC","AD","AH","AS",
-                "JC","JD","JH","JS","KC","KD","KH","KS","QC","QD","QH","QS"];
+    let cards = ["2C", "2D", "2H", "2S", "3C", "3D", "3H", "3S", "4C", "4D", "4H", "4S", "5C", "5D", "5H", "5S", "6C", "6D", "6H", "6S",
+        "7C", "7D", "7H", "7S", "8C", "8D", "8H", "8S", "9C", "9D", "9H", "9S", "10C", "10D", "10H", "10S", "AC", "AD", "AH", "AS",
+        "JC", "JD", "JH", "JS", "KC", "KD", "KH", "KS", "QC", "QD", "QH", "QS"];
 
     return cards[Math.floor(Math.random() * cards.length)]
 }
 
 function getValues(card) {
     let values = {
-        "2C":2,"2D":2,"2H":2,"2S":2,"3C":3,"3D":3,"3H":3,"3S":3,"4C":4,"4D":4,"4H":4,"4S":4,"5C":5,"5D":5,
-        "5H":5,"5S":5,"6C":6,"6D":6,"6H":6,"6S":6,"7C":7,"7D":7,"7H":7,"7S":7,"8C":8,"8D":8,"8H":8,"8S":8,
-        "9C":9,"9D":9,"9H":9,"9S":9,"10C":10,"10D":10,"10H":10,"10S":10,"AC":11,"AD":11,"AH":11,"AS":11,
-        "JC":10,"JD":10,"JH":10,"JS":10,"KC":10,"KD":10,"KH":10,"KS":10,"QC":10,"QD":10,"QH":10,"QS":10};
+        "2C": 2,
+        "2D": 2,
+        "2H": 2,
+        "2S": 2,
+        "3C": 3,
+        "3D": 3,
+        "3H": 3,
+        "3S": 3,
+        "4C": 4,
+        "4D": 4,
+        "4H": 4,
+        "4S": 4,
+        "5C": 5,
+        "5D": 5,
+        "5H": 5,
+        "5S": 5,
+        "6C": 6,
+        "6D": 6,
+        "6H": 6,
+        "6S": 6,
+        "7C": 7,
+        "7D": 7,
+        "7H": 7,
+        "7S": 7,
+        "8C": 8,
+        "8D": 8,
+        "8H": 8,
+        "8S": 8,
+        "9C": 9,
+        "9D": 9,
+        "9H": 9,
+        "9S": 9,
+        "10C": 10,
+        "10D": 10,
+        "10H": 10,
+        "10S": 10,
+        "AC": 11,
+        "AD": 11,
+        "AH": 11,
+        "AS": 11,
+        "JC": 10,
+        "JD": 10,
+        "JH": 10,
+        "JS": 10,
+        "KC": 10,
+        "KD": 10,
+        "KH": 10,
+        "KS": 10,
+        "QC": 10,
+        "QD": 10,
+        "QH": 10,
+        "QS": 10
+    };
     return values[card]
 
 }
 
 function getDealersCard() {
     let card = random();
-    let future_value =dealer_values + getValues(card);
-    if (dace1===false && (card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
-        console.log("if")
-        dealer_values += 1;
-        dace1 = true
-        dace2 = true
-    }else if (dace1===false && (card === "AC" || card === "AD" || card === "AH" || card === "AS")){
-        console.log("if2")
-        dealer_values += getValues(card);
-        dace1 = true
+    let daceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
+    let future_value = dealer_values + getValues(card);
+    if (dace === false && !daceCard) {
+        player_values += getValues(card);
+    } else if (dace === false && daceCard && player_values <= 10) {
+        player_values += getValues(card);
+        dace = true;
+    } else if (dace === true && daceCard && player_values > 21) {
+        player_values += 1;
+    } else if (dace === true && !daceCard && future_value > 21) {
+        player_values -= 10;
+        player_values += getValues(card);
+        dace = false;
     }
-    else if ( dace1===true && dace2 === true && (card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
-        dealer_values += 1;
-        console.log("if3")
-        dace3 = true;
-    }else if ( dace1===true && dace2 === false && !(card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
-        dealer_values += -10;
-        dealer_values += getValues(card);
-        dace2 = true;
-         console.log("if4")
-    }else if ( dace1===true && dace2 === true && dace3===true && !(card === "AC" || card === "AD" || card === "AH" || card === "AS") && future_value>21){
-        dealer_values += -10;
-        dealer_values += getValues(card);
-         console.log("if5")
-    } else {
-        console.log("else")
-        dealer_values += getValues(card);
-    }
+
     let dealer = document.getElementById("dealer");
     dealer.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
 }
 
 function checkAcesForPlayer(card) {
-    let future_value =player_values + getValues(card);
+    let future_value = player_values + getValues(card);
     let aceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
-    if (ace1 ===false && !aceCard){
+    if (ace === false && !aceCard) {
         player_values += getValues(card);
-    }else if (ace1 === false && aceCard && player_values <= 10){
+    } else if (ace === false && aceCard && player_values <= 10) {
         player_values += getValues(card);
-        ace1 = true;
-    }else if (ace1 === false && aceCard && future_value > 21){
+        ace = true;
+    } else if (ace === true && aceCard && player_values > 21) {
         player_values += 1;
-        ace1 =true;
-        ace2 = true;
-    }else if (ace1 === true && aceCard && player_values > 21){
-        player_values += 1;
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false &&!aceCard && future_value > 21){
+    } else if (ace === true && !aceCard && future_value > 21) {
         player_values -= 10;
         player_values += getValues(card);
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false &&!aceCard){
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard && future_value < 21){
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&!aceCard && future_value >= 21) {
-        player_values += getValues(card);
-    }else if (ace1 === true && ace2 === true &&aceCard && future_value > 21) {
-        player_values += 1;
-        ace2 = true;
-    }else if (ace1 === true && ace2 === false && aceCard && future_value > 21) {
-        player_values += 1;
-        ace2 = true;
+        ace = false;
     }
 }
 
@@ -123,11 +138,11 @@ function getPlayersCard() {
     checkAcesForPlayer(card);
     let player = document.getElementById("player");
     player.insertAdjacentHTML("beforeend", `<div class="card" id="boardCards"><img src="/static/img/${card}.png"></div>`);
-    if (player_values === 21){
+    if (player_values === 21) {
         winPopup();
         closePopup();
     }
-    if (player_values > 21){
+    if (player_values > 21) {
         losePopup();
         closePopup();
     }
@@ -146,30 +161,30 @@ function changeBet() {
     let raiseButton = document.getElementById('up');
     let decreaseButton = document.getElementById('down');
 
-    raiseButton.addEventListener('click', function() {
-       if (balance > 0) {
-           amount += 10;
-           balance -= 10;
-           console.log(balance);
-           amountContainer.innerHTML = `Bet: <span>${amount} $</span>`;
-           balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
-       }
+    raiseButton.addEventListener('click', function () {
+        if (balance > 0) {
+            amount += 10;
+            balance -= 10;
+            console.log(balance);
+            amountContainer.innerHTML = `Bet: <span>${amount} $</span>`;
+            balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
+        }
     })
 
-    decreaseButton.addEventListener('click', function() {
-       if (amount > 0) {
-           amount -= 10;
-           balance += 10;
-           console.log(balance);
-           amountContainer.innerHTML = `Bet:<span>${amount} $</span>`;
-           balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
-       }
+    decreaseButton.addEventListener('click', function () {
+        if (amount > 0) {
+            amount -= 10;
+            balance += 10;
+            console.log(balance);
+            amountContainer.innerHTML = `Bet:<span>${amount} $</span>`;
+            balanceContainer.innerHTML = `Balance: <span>${balance} $</span>`;
+        }
     })
 }
 
 function getStarterCards() {
     getDealersCard();
-    for (let i=0; i<2; i++){
+    for (let i = 0; i < 2; i++) {
         getPlayersCard();
     }
 }
@@ -252,8 +267,8 @@ function showFakeCard() {
 
 function setupNextRound() {
     amount = 0;
-    player_values =0;
-    dealer_values =0;
+    player_values = 0;
+    dealer_values = 0;
     document.getElementById("playerValue").innerHTML = player_values;
     document.getElementById("dealerValue").innerHTML = dealer_values;
 
@@ -311,7 +326,6 @@ function bet() {
     standButton.classList.remove("hidden");
 
 }
-
 
 
 main();

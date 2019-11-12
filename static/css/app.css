@@ -17,8 +17,9 @@ body {
 }
 
 body {
-    background: #ffffff url('/static/img/bg1.jpg');
+    background-image: url('/static/img/bg1.jpg');
     font-family: 'Coda', cursive;
+    background-repeat: repeat-y;
 }
 
 .container {

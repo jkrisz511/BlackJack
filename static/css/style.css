@@ -1,11 +1,12 @@
 /******** Index page css ********/
 
 html {
-      background: #ffffff url('/static/img/bg4.jpg');
+      background-image: url('/static/img/bg4.jpg');
       background-size: cover;
       font-family: 'helvetica neue';
       text-align: center;
       font-size: 10px;
+      background-repeat: repeat-y;
     }
 
 body {
