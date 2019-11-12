@@ -99,16 +99,21 @@ function getDealersCard() {
     let daceCard = (card === "AC" || card === "AD" || card === "AH" || card === "AS");
     let future_value = dealer_values + getValues(card);
     if (dace === false && !daceCard) {
-        player_values += getValues(card);
+        dealer_values += getValues(card);
     } else if (dace === false && daceCard && player_values <= 10) {
-        player_values += getValues(card);
+        dealer_values += getValues(card);
         dace = true;
+     } else if (ace === false && daceCard && future_value > 21) {
+        dealer_values += 1;
+        ace = true;
     } else if (dace === true && daceCard && player_values > 21) {
-        player_values += 1;
+        dealer_values += 1;
     } else if (dace === true && !daceCard && future_value > 21) {
-        player_values -= 10;
-        player_values += getValues(card);
+        dealer_values -= 10;
+        dealer_values += getValues(card);
         dace = false;
+    }else{
+        dealer_values += getValues(card);
     }
 
     let dealer = document.getElementById("dealer");
@@ -123,12 +128,17 @@ function checkAcesForPlayer(card) {
     } else if (ace === false && aceCard && player_values <= 10) {
         player_values += getValues(card);
         ace = true;
-    } else if (ace === true && aceCard && player_values > 21) {
+    } else if (ace === false && aceCard && future_value > 21) {
+        player_values += 1;
+        ace = true;
+    } else if (ace === true && aceCard && future_value > 21) {
         player_values += 1;
     } else if (ace === true && !aceCard && future_value > 21) {
         player_values -= 10;
         player_values += getValues(card);
         ace = false;
+    }else{
+        player_values += getValues(card);
     }
 }
 
